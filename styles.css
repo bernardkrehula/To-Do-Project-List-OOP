@@ -85,15 +85,59 @@ html {
     padding-right: 250px;
     width: 100%;
 }
-.newToDo button{
+.newToDoBtn {
     font-size: 2.8rem;
     padding: 10px 50px;
     border: none;
     border-radius: 8px;
     background-color: white;
 }
-.newToDo button:hover {
+.newToDoBtn:hover {
     background-color: rgb(220, 220, 220);
+}
+.newToDo h2 {
+    margin-top: 30px;
+    font-size: 2.7rem;
+    font-weight: 500;
+}
+.newToDoTask li {
+    display: flex;
+    align-items: center;
+    list-style-type: none;
+    margin-top: 20px;
+    font-size: 2rem;
+}
+.newToDoTask button {
+
+    padding: 8px 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 2rem;
+}
+.deleteBtn {
+    cursor: pointer;
+    margin-right: 50px;
+    background-color: rgb(255, 185, 177);
+}
+.deleteBtn:hover {
+    background-color: rgb(255, 170, 161);
+}
+.editBtn {
+    cursor: pointer;
+    margin-right: 10px;
+    background-color: rgb(253, 255, 125);
+}
+.editBtn:hover {
+    background-color: rgb(230, 232, 125);
+}
+.newToDoTask h4 {
+    margin-left: auto;
+    margin-right: 300px;
+}
+.newToDoTask input{
+    width: 20px;
+    height: 20px;
+    margin-right: 0;
 }
 .bottom{
     height: 40px;
