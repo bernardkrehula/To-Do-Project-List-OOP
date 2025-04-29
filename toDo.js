@@ -1,19 +1,31 @@
 class NewToDo {
     constructor(id, task, date){
-        this.newToDoArray = [
-            this.id = id,
-            this.task = task,
-            this.date = date,
-        ];
+        this.id = id;
+        this.task = task;
+        this.date = date;
     }
 }
 
 class NewProject {
     constructor(){
-        this.newProjectArray = [];
+        this.projectArray = [];
     }
-    pushToDoInProjectArray(){
-        this.newProjectArray.push();
+    pushToDoInProjectArray(toDo){
+        this.projectArray.push(toDo);
+    }
+    createProjectOnScreen(toDo){
+        let html = `
+        <li id="${toDo.id}"><p>${toDo.task}</p><button>x</button></li>
+        `;
+        projects.insertAdjacentHTML('beforeend', html);
     }
 }
-const project = new NewProject();
+class NewProjectManager {
+    constructor(){
+        this.newProjectsArray = [];
+    }
+    pushProjectInArray(project){
+        this.newProjectsArray.push(project);
+    }
+}
+const manager = new NewProjectManager();
