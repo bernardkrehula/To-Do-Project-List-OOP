@@ -106,9 +106,13 @@ html {
     list-style-type: none;
     margin-top: 20px;
     font-size: 2rem;
+    padding: 2px 10px;
+    border-radius: 0 10px 10px 0;
+}
+.newToDoTask li:hover {
+    background-color: rgb(233, 233, 233);
 }
 .newToDoTask button {
-
     padding: 8px 30px;
     border: none;
     border-radius: 5px;
@@ -138,6 +142,61 @@ html {
     width: 20px;
     height: 20px;
     margin-right: 0;
+}
+.addToDo {
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    padding-right: 150px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    margin-top: 40px;
+    background-color: rgb(235, 235, 235);
+    border-radius: 5px;
+}
+.date-p {
+    font-size: 2rem;
+    margin-left: auto;
+    margin-right: 10px;
+}
+.toDoInputDate {
+    font-size: 2rem;
+    padding: 5px 20px;
+    border: none;
+}
+.toDoInput {
+    font-size: 2rem;
+    padding: 5px 20px;
+    border: none;
+}
+.toDo-p {
+    font-size: 2rem;
+    margin-right: 10px;
+}
+.addToDoBtns {
+    display: flex;
+    gap: 50px;
+    justify-content: center;
+    margin-top: 10px;
+}
+.addToDoBtns button {
+    font-size: 2.4rem;
+    width: 50%;
+    border: none;
+    padding: 10px 0;
+    border-radius: 5px;
+}
+.addBtn {
+    background-color: rgb(186, 255, 197);
+}
+.addBtn:hover {
+    background-color: rgb(158, 255, 174)
+}
+.cancelBtn {
+    background-color: rgb(255, 185, 177);
+}
+.cancelBtn:hover {
+    background-color: rgb(254, 155, 144);
 }
 .bottom{
     height: 40px;
