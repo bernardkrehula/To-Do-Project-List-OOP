@@ -21,7 +21,9 @@ class NewProject {
         this.isClicked = false;
     }
     pushToDoInProjectArray(toDo){
-        this.projectArray.push(toDo);
+        if(manager.findClickedArray().isClicked){
+            this.projectArray.push(toDo);
+        }
     }
     createProjectOnScreen(){
         let html = `
@@ -29,7 +31,6 @@ class NewProject {
         `;
         projects.insertAdjacentHTML('beforeend', html);
     }
- 
 }
 class NewProjectManager {
     constructor(){
@@ -40,6 +41,9 @@ class NewProjectManager {
     }
     findClickedProject(getId){
         return this.newProjectsArray.find(project => project.id == getId);
+    }
+    findClickedArray(){
+        return this.newProjectsArray.find(project => project.isClicked == true);
     }
     removeClickedProject(getId){
         this.newProjectsArray = this.newProjectsArray.filter(project => project.id != getId)
