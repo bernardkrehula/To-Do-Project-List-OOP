@@ -21,6 +21,7 @@ projectAddBtn.addEventListener('click', () => {
     project = new NewProject(projectInput.value, id);
     project.createProjectOnScreen(toDo);
     manager.pushProjectInArray(project);
+    projectInput.value = '';
 })
 
 projects.addEventListener('click', (e) => {
@@ -30,6 +31,7 @@ projects.addEventListener('click', (e) => {
     
     if(findProject){
        let arrayManager = manager.findClickedProject(getId);
+       manager.setProjectIsClickedToFalse();
        arrayManager.isClicked = true;
     }
     if(removeBtn){
@@ -51,10 +53,26 @@ newToDoFrom.addEventListener('submit', (e) => {
     toDoInputDate.value = '';
     toDo.createNewToDoOnClick();
     newToDoFrom.style.display = 'none';
-    console.log(manager.findClickedArray())
+
+
+   
 })
 cancelBtn.addEventListener('click', () => {
     newToDoFrom.style.display = 'none';
     toDoTaskInput.value = '';
     toDoInputDate.value = '';
 });
+
+newToDoTask.addEventListener('click', (e) => {
+    const tasks = e.target.closest('li').id;
+    const btn = e.target.closest('button');
+    
+    if(btn.className == 'deleteBtn'){
+        project.removeObject(tasks)
+      /*   newToDoTask.removeChild(tasks); */
+      manager.returnProjectsArray();
+    }
+    if(btn.className == 'editBtn'){
+        
+    }
+})

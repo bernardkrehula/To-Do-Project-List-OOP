@@ -21,9 +21,16 @@ class NewProject {
         this.isClicked = false;
     }
     pushToDoInProjectArray(toDo){
-        if(manager.findClickedArray().isClicked){
-            this.projectArray.push(toDo);
+        if(manager.findClickedArray() == undefined){
+            alert('alo')
         }
+        if(manager.findClickedArray().isClicked){
+            let foundArray = manager.findClickedArray();
+            foundArray.projectArray.push(toDo);
+        }  
+    }
+    removeObject(id){
+        manager.findClickedArray().projectArray = manager.findClickedArray().projectArray.filter(object => object.id != id)
     }
     createProjectOnScreen(){
         let html = `
@@ -45,8 +52,19 @@ class NewProjectManager {
     findClickedArray(){
         return this.newProjectsArray.find(project => project.isClicked == true);
     }
+    setProjectIsClickedToFalse(){
+        this.newProjectsArray.forEach(array => {
+            if(array.isClicked){
+                return array.isClicked = false;
+            }
+    })
+    }
+    returnProjectsArray(){
+        return this.newProjectsArray.map(project => console.log(project));
+    }
     removeClickedProject(getId){
         this.newProjectsArray = this.newProjectsArray.filter(project => project.id != getId)
     }
 }
+project = new NewProject();
 const manager = new NewProjectManager();
