@@ -31,12 +31,22 @@ projects.addEventListener('click', (e) => {
     
     if(findProject){
        let arrayManager = manager.findClickedProject(getId);
+       if(arrayManager.isClicked === false){
+        newToDoTask.innerHTML = '';
+        project.refreshObjectListOnScreen(getId);
+       }
+       else {
+        newToDoTask.innerHTML = '';
+        project.refreshObjectListOnScreen(getId);
+       }
        manager.setProjectIsClickedToFalse();
        arrayManager.isClicked = true;
     }
+
     if(removeBtn){
         manager.removeClickedProject(getId);
         projects.removeChild(findProject);
+        newToDoTask.innerHTML = '';
     }
 });
 
@@ -45,7 +55,7 @@ newToDoBtn.addEventListener('click', () => newToDoFrom.style.display = 'block');
 newToDoFrom.addEventListener('submit', (e) => {
     e.preventDefault();
     const id = crypto.randomUUID();
-    const isChecked = false;
+    const isChecked = '';
 
     toDo = new NewToDo(id, toDoTaskInput.value, toDoInputDate.value, isChecked);
     project.pushToDoInProjectArray(toDo);
@@ -66,13 +76,26 @@ cancelBtn.addEventListener('click', () => {
 newToDoTask.addEventListener('click', (e) => {
     const tasks = e.target.closest('li').id;
     const btn = e.target.closest('button');
-    
-    if(btn.className == 'deleteBtn'){
-        project.removeObject(tasks)
-      /*   newToDoTask.removeChild(tasks); */
-      manager.returnProjectsArray();
+    const checkboxInput = e.target.closest('input');
+
+    if(checkboxInput){
+        if(checkboxInput.checked){
+            project.findToDoInArray(tasks).isChecked = 'checked';
+        }
+       else {
+        project.findToDoInArray(tasks).isChecked = '';
+       }
     }
-    if(btn.className == 'editBtn'){
-        
+    else
+    {
+        if(btn.className === 'editBtn'){
+            console.log('radi')
+        }
+        if(btn.className === 'deleteBtn'){
+            project.removeObject(tasks);
+            newToDoTask.innerHTML = '';
+            project.removeTaskFromScreen();
+        }
     }
+
 })

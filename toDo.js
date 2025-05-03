@@ -22,7 +22,7 @@ class NewProject {
     }
     pushToDoInProjectArray(toDo){
         if(manager.findClickedArray() == undefined){
-            alert('alo')
+            alert('Choose project')
         }
         if(manager.findClickedArray().isClicked){
             let foundArray = manager.findClickedArray();
@@ -30,13 +30,33 @@ class NewProject {
         }  
     }
     removeObject(id){
-        manager.findClickedArray().projectArray = manager.findClickedArray().projectArray.filter(object => object.id != id)
+        return manager.findClickedArray().projectArray = manager.findClickedArray().projectArray.filter(object => object.id != id)
     }
     createProjectOnScreen(){
         let html = `
         <li id="${this.id}"><p>${this.projectName}</p><button>x</button></li>
         `;
         projects.insertAdjacentHTML('beforeend', html);
+    }
+    findToDoInArray(id){
+        return manager.findClickedArray().projectArray.find(object => object.id == id);
+    }
+    refreshObjectListOnScreen(getId){
+        manager.findClickedProject(getId).projectArray.forEach(object => {
+            console.log(object)
+            let html = `
+            <li id="${object.id}"><h3>Title: ${object.task}</h3><h4>Due date: ${object.date}</h4><button class="editBtn">edit</button><button class="deleteBtn">delete</button><input type="checkbox" ${object.isChecked}></li>
+            `;
+            newToDoTask.insertAdjacentHTML('beforeend', html);
+        })
+    }
+    removeTaskFromScreen(){
+        this.removeObject().forEach(object => {
+            let html = `
+            <li id="${object.id}"><h3>Title: ${object.task}</h3><h4>Due date: ${object.date}</h4><button class="editBtn">edit</button><button class="deleteBtn">delete</button><input type="checkbox"></li>
+            `;
+            newToDoTask.insertAdjacentHTML('beforeend', html);
+        })
     }
 }
 class NewProjectManager {
@@ -58,9 +78,6 @@ class NewProjectManager {
                 return array.isClicked = false;
             }
     })
-    }
-    returnProjectsArray(){
-        return this.newProjectsArray.map(project => console.log(project));
     }
     removeClickedProject(getId){
         this.newProjectsArray = this.newProjectsArray.filter(project => project.id != getId)
