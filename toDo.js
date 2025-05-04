@@ -43,7 +43,14 @@ class NewProject {
     }
     refreshObjectListOnScreen(getId){
         manager.findClickedProject(getId).projectArray.forEach(object => {
-            console.log(object)
+            let html = `
+            <li id="${object.id}"><h3>Title: ${object.task}</h3><h4>Due date: ${object.date}</h4><button class="editBtn">edit</button><button class="deleteBtn">delete</button><input type="checkbox" ${object.isChecked}></li>
+            `;
+            newToDoTask.insertAdjacentHTML('beforeend', html);
+        })
+    }
+    refreshToDo(newToDo){
+        newToDo.forEach(object => {
             let html = `
             <li id="${object.id}"><h3>Title: ${object.task}</h3><h4>Due date: ${object.date}</h4><button class="editBtn">edit</button><button class="deleteBtn">delete</button><input type="checkbox" ${object.isChecked}></li>
             `;
@@ -59,13 +66,15 @@ class NewProject {
         })
     }
 }
-class NewProjectManager {
+class ProjectManager {
     constructor(){
         this.newProjectsArray = [];
+        this.clickedProject = null;
     }
     pushProjectInArray(project){
         this.newProjectsArray.push(project);
     }
+    //Umjesto ovog napravi setClickedProject
     findClickedProject(getId){
         return this.newProjectsArray.find(project => project.id == getId);
     }
@@ -83,5 +92,4 @@ class NewProjectManager {
         this.newProjectsArray = this.newProjectsArray.filter(project => project.id != getId)
     }
 }
-project = new NewProject();
-const manager = new NewProjectManager();
+const manager = new ProjectManager();

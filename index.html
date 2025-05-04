@@ -25,9 +25,19 @@
                 <h2>Todos ↓</h2>
                 <div class="newToDoTask">
                 </div>
+                <form class="newToDoEditForm" style="display: none;">
+                    <div class="addToDo">
+                            <p class="toDo-p">Todo:</p><input class="toDoEditInput" placeholder="My todo" required>
+                            <p class="date-p">Due:</p><input class="toDoInputEditDate" type="date" required>
+                    </div>
+                    <div class="addToDoBtns">
+                        <button class="addBtn" type="submit" style="background-color:  rgb(253, 255, 125);">Edit</button><button class="cancelBtn" type="button">Cancel</button>
+                    </div>
+                </form>
                 <form class="newToDoForm" style="display: none;">
                     <div class="addToDo">
-                            <p class="toDo-p">Todo:</p><input class="toDoInput" placeholder="My todo" required><p class="date-p">Due:</p><input class="toDoInputDate" type="date" required>
+                            <p class="toDo-p">Todo:</p><input class="toDoInput" placeholder="My todo" required>
+                            <p class="date-p">Due:</p><input class="toDoInputDate" type="date" required>
                     </div>
                     <div class="addToDoBtns">
                         <button class="addBtn" type="submit">Add</button><button class="cancelBtn" type="button">Cancel</button>

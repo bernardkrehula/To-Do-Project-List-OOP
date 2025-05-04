@@ -204,6 +204,18 @@ html {
     font-size: 2rem;
     margin-right: 10px;
 }
+.toDoEditInput {
+    font-size: 2rem;
+    padding: 5px 20px;
+    border: none;
+    outline: none;
+}
+.toDoInputEditDate{
+    font-size: 2rem;
+    padding: 5px 20px;
+    border: none;
+    outline: none;
+}
 .addToDoBtns {
     display: flex;
     gap: 50px;
