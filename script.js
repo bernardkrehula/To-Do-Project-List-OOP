@@ -20,8 +20,8 @@ newProjectBtn.addEventListener('click', () => {
 projectAddBtn.addEventListener('click', () => {
     const id = crypto.randomUUID();
     const project = new NewProject(projectInput.value, id);
-    manager.pushProjectInArray(project);
-    //manager.renderProjects()
+    manager.pushProjectInProjectManager(project);
+    project.renderProjects();
     projectInput.value = '';
 })
 
@@ -31,10 +31,11 @@ projects.addEventListener('click', (e) => {
     const removeBtn = e.target.closest('button');
     
     if(findProject){
-       const activeProject = manager.findClickedProject(getId);
+        const activeProject = manager.findClickedProject(getId);
         newToDoTask.innerHTML = '';
-   //     activeProject.renderToDos()
-       newToDoTask.id = getId;
+        activeProject.renderToDos(activeProject);
+        manager.setProjectIsClicked();
+        activeProject.isClicked = true;
     }
 
     if(removeBtn){
@@ -54,7 +55,8 @@ newToDoFrom.addEventListener('submit', (e) => {
     const toDo = new NewToDo(id, toDoTaskInput.value, toDoInputDate.value, isChecked);
 
     //manager.clickedProject...
-    project.pushToDoInProjectArray(toDo);
+    manager.findClickedArray();
+    manager.returnProjecManagerArray();
     toDoTaskInput.value = '';
     toDoInputDate.value = '';
     toDo.createNewToDoOnClick();
