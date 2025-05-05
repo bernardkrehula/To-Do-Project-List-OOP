@@ -1,6 +1,6 @@
 class NewToDo {
-    constructor(id, task, date, isChecked){
-        this.id = id;
+    constructor(task, date, isChecked){
+        this.id = crypto.randomUUID();
         this.task = task;
         this.date = date;
         this.isChecked = isChecked;
@@ -84,10 +84,10 @@ class ProjectManager {
         this.newProjectsArray.push(project);
     }
     //Umjesto ovog napravi setClickedProject
-    findClickedProject(getId){
+    findClickedProjectWithId(getId){
         return this.newProjectsArray.find(project => project.id == getId);
     }
-    findClickedArray(){
+    findClickedProjectWithState(){
         return this.newProjectsArray.find(project => project.isClicked == true);
     }
     setProjectIsClickedToFalse(){
@@ -96,8 +96,8 @@ class ProjectManager {
     returnProjecManagerArray(){
         console.log(this.newProjectsArray);
     }
-    clickedProject(){
-
+    pushToDoInclickedProject(toDo){
+        return this.findClickedArray().projectArray.push(toDo);
     }
     removeClickedProject(getId){
         this.newProjectsArray = this.newProjectsArray.filter(project => project.id != getId)
