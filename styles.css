@@ -8,6 +8,12 @@ html {
     font-family: Arial, Helvetica, sans-serif;
     overflow: hidden;
 }
+.main button {
+    cursor: pointer;
+}
+.main li {
+    cursor: pointer;
+}
 .title{
     font-size: 5rem;
     background-color: rgb(161, 189, 199);
@@ -55,7 +61,6 @@ html {
     font-size: 2rem;
     padding: 5px 10px;
     margin-top: 10px;
-    cursor: pointer;
 }
 .projectBtns button:hover {
     background-color: rgb(229, 229, 229);
@@ -147,8 +152,29 @@ html {
     border-radius: 5px;
     font-size: 2rem;
 }
+.newToDoTask form{
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    font-size: 2rem;
+    padding: 2px 10px;
+    border-radius: 0 10px 10px 0;
+}
+.newToDoTask form:hover {
+    background-color: rgb(233, 233, 233);
+}
+.titleInput {
+    font-size: 1.8rem;
+    padding: 12px 5px;
+    width: 200px !important;
+}
+.date {
+    font-size: 1.8rem;
+    padding: 12px 5px;
+    width: 100px !important;
+    margin-right: 20px;
+}
 .deleteBtn {
-    cursor: pointer;
     margin-right: 50px;
     background-color: rgb(255, 185, 177);
 }
@@ -156,7 +182,6 @@ html {
     background-color: rgb(255, 170, 161);
 }
 .editBtn {
-    cursor: pointer;
     margin-right: 10px;
     background-color: rgb(253, 255, 125);
 }
@@ -164,8 +189,12 @@ html {
     background-color: rgb(230, 232, 125);
 }
 .newToDoTask h4 {
-    margin-left: auto;
-    margin-right: 300px;
+    margin-left: 25px;
+    margin-right: auto;
+    
+}
+.newToDoTask h3 {
+    width: 100px;
 }
 .newToDoTask input{
     width: 20px;

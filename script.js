@@ -1,5 +1,5 @@
 const newToDoBtn = document.querySelector('.newToDoBtn');
-const toDoTaskInput = document.querySelector('.toDoInput');
+const toDoTitleInput = document.querySelector('.toDoInput');
 const toDoInputDate = document.querySelector('.toDoInputDate');
 const cancelBtn = document.querySelector('.cancelBtn');
 const newProjectBtn = document.querySelector('.newProjectBtn');
@@ -9,7 +9,6 @@ const projectAddBtn = document.querySelector('.projectAddBtn');
 const projectCreator = document.querySelector('.projectCreator');
 const newToDoTask = document.querySelector('.newToDoTask');
 const newToDoFrom = document.querySelector('.newToDoForm');
-const newToDoEditForm = document.querySelector('.newToDoEditForm');
 const newToDoEditTaskInput = document.querySelector('.toDoEditInput');
 const newToDoEditDateInput = document.querySelector('.toDoInputEditDate');
 
@@ -51,56 +50,63 @@ newToDoFrom.addEventListener('submit', (e) => {
     e.preventDefault();
     const isChecked = '';
 
-    const toDo = new NewToDo(toDoTaskInput.value, toDoInputDate.value, isChecked);
+    const toDo = new NewToDo(toDoTitleInput.value, toDoInputDate.value, isChecked, false);
 
     manager.pushToDoInClickedProject(toDo);
-    manager.returnProjecManagerArray();
-    toDoTaskInput.value = '';
+    toDoTitleInput.value = '';
     toDoInputDate.value = '';
     toDo.createNewToDoOnClick();
     newToDoFrom.style.display = 'none';
 })
 cancelBtn.addEventListener('click', () => {
     newToDoFrom.style.display = 'none';
-    toDoTaskInput.value = '';
+    toDoTitleInput.value = '';
     toDoInputDate.value = '';
 });
 
 newToDoTask.addEventListener('click', (e) => {
-    const tasks = e.target.closest('li').id;
+    const toDoId = e.target.closest('li').id;
     const btn = e.target.closest('button');
     const checkboxInput = e.target.closest('input');
 
     if(checkboxInput){
         if(checkboxInput.checked){
-            manager.findClickedToDo(tasks).isChecked = 'checked';
+            manager.findClickedToDo(toDoId).isChecked = 'checked';
         }
        else {
-            manager.findClickedToDo(tasks).isChecked = '';
+            manager.findClickedToDo(toDoId).isChecked = '';
        }
     }
     else
     {
         if(btn.className === 'editBtn'){
-            newToDoEditForm.style.display = 'block';
-
-            newToDoEditForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-
-                const foundTodDo = manager.findClickedProjectWithState();
-                foundTodDo.task = newToDoEditTaskInput.value;
-                foundTodDo.date = newToDoEditDateInput.value;
-                newToDoTask.innerHTML = '';
-                project.refreshObjectListOnScreen(newToDoTask.id);
-             /*    newToDoEditTaskInput.value = '';
-                newToDoEditDateInput.value = '', */
-                newToDoEditForm.style.display = 'none';
-            })
+            const todo = manager.findClickedToDo(toDoId);
+            todo.isEdited = true;
+            manager.renderToDoOnScreen();
         }
         if(btn.className === 'deleteBtn'){
-            manager.removeToDo(tasks);
-            newToDoTask.innerHTML = '';
-            manager.renderTasksOnScreen();
+            manager.removeToDo(toDoId);
+            manager.renderToDoOnScreen();
         }
     }
 })
+newToDoTask.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const form = e.target.closest('form');
+    if (!form) return;
+
+    const toDoId = form.id;
+    const todo = manager.findClickedToDo(toDoId);
+
+    const newTitle = form.querySelector('.titleInput').value;
+    const newDate = form.querySelector('.date').value;
+    const isChecked = form.querySelector('.checkBoxInput').checked;
+
+    todo.title = newTitle;
+    todo.date = newDate;
+    todo.isChecked = isChecked ? 'checked' : '';
+    todo.isEdited = false;
+    
+    manager.renderToDoOnScreen();
+});

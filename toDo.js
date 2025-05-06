@@ -1,13 +1,14 @@
 class NewToDo {
-    constructor(task, date, isChecked){
+    constructor(title, date, isChecked, isEdited){
         this.id = crypto.randomUUID();
-        this.task = task;
+        this.title = title;
         this.date = date;
         this.isChecked = isChecked;
+        this.isEdited = isEdited;
     }
     createNewToDoOnClick(){
         let html = `
-        <li id="${this.id}"><h3>Title: ${this.task}</h3><h4>Due date: ${this.date}</h4><button class="editBtn">edit</button><button class="deleteBtn">delete</button><input type="checkbox"></li>
+        <li id="${this.id}"><h3>Title: ${this.title}</h3><h4>Due date: ${this.date}</h4><button class="editBtn">edit</button><button class="deleteBtn">delete</button><input type="checkbox" class="checkBoxInput"></li>
         `;
         newToDoTask.insertAdjacentHTML('beforeend', html);
     }
@@ -20,41 +21,28 @@ class NewProject {
         this.projectName = projectName;
         this.isClicked = false;
     }
-    findToDoInArray(id){
-        return manager.findClickedArray().projectArray.find(object => object.id == id);
-    }
-    refreshObjectListOnScreen(getId){
-        manager.findClickedProject(getId).projectArray.forEach(object => {
-            let html = `
-            <li id="${object.id}"><h3>Title: ${object.task}</h3><h4>Due date: ${object.date}</h4><button class="editBtn">edit</button><button class="deleteBtn">delete</button><input type="checkbox" ${object.isChecked}></li>
-            `;
-            newToDoTask.insertAdjacentHTML('beforeend', html);
-        })
-    }
-    renderToDos(newToDo){
-        newToDo.projectArray.forEach(object => {
-            let html = `
-            <li id="${object.id}"><h3>Title: ${object.task}</h3><h4>Due date: ${object.date}</h4><button class="editBtn">edit</button><button class="deleteBtn">delete</button><input type="checkbox" ${object.isChecked}></li>
-            `;
-            newToDoTask.insertAdjacentHTML('beforeend', html);
-        })
-    }
     renderProjects(){
         let html = `
         <li id="${this.id}"><p>${this.projectName}</p><button>x</button></li>
         `;
         projects.insertAdjacentHTML('beforeend', html);
     }
+    renderToDos(newToDo){
+        newToDo.projectArray.forEach(object => {
+            let html = `
+            <li id="${object.id}"><h3>Title: ${object.title}</h3><h4>Due date: ${object.date}</h4><button class="editBtn">edit</button><button class="deleteBtn">delete</button><input type="checkbox" ${object.isChecked} class="checkBoxInput"></li>
+            `;
+            newToDoTask.insertAdjacentHTML('beforeend', html);
+        })
+    }
 }
 class ProjectManager {
     constructor(){
         this.newProjectsArray = [];
-        this.clickedProject = null;
     }
     pushProjectInProjectManager(project){
         this.newProjectsArray.push(project);
     }
-    //Umjesto ovog napravi setClickedProject
     findClickedProjectWithId(getId){
         return this.newProjectsArray.find(project => project.id == getId);
     }
@@ -64,9 +52,6 @@ class ProjectManager {
     setProjectIsClickedToFalse(){
         this.newProjectsArray.forEach(project => project.isClicked = false);
     }
-    returnProjecManagerArray(){
-        console.log(this.newProjectsArray);
-    }
     pushToDoInClickedProject(toDo){
         return this.findClickedProjectWithState().projectArray.push(toDo);
     }
@@ -74,18 +59,26 @@ class ProjectManager {
         this.newProjectsArray = this.newProjectsArray.filter(project => project.id != getId)
     }
     findClickedToDo(id){
-        return this.findClickedProjectWithState().projectArray.find(toDo => toDo.id = id);
+        return this.findClickedProjectWithState().projectArray.find(toDo => toDo.id == id);
     }
     removeToDo(id){
         return this.findClickedProjectWithState().projectArray = this.findClickedProjectWithState().projectArray.filter(object => object.id != id)
     }
-    renderTasksOnScreen(){
-        this.removeToDo().forEach(object => {
-            let html = `
-            <li id="${object.id}"><h3>Title: ${object.task}</h3><h4>Due date: ${object.date}</h4><button class="editBtn">edit</button><button class="deleteBtn">delete</button><input type="checkbox"></li>
-            `;
-            newToDoTask.insertAdjacentHTML('beforeend', html);
+    renderToDoOnScreen(){
+        newToDoTask.innerHTML = '';
+        this.findClickedProjectWithState().projectArray.forEach(object => {
+            this.renderEditFormToDo(object);
         })
+    }
+    renderEditFormToDo(toDo){
+        let html =  toDo.isEdited ? `
+        <form id="${toDo.id}"><h3>Title: </h3><input value="${toDo.title}" class='titleInput'><h4>Due date: </h4><input type="date" value="${toDo.date}" class='date'><button class="editBtn" type="submit">Save</button><button class="deleteBtn">delete</button><input type="checkbox" class="checkBoxInput"></form>
+        `
+        :
+        `
+        <li id="${toDo.id}"><h3>Title: ${toDo.title}</h3><h4>Due date: ${toDo.date}</h4><button class="editBtn">edit</button><button class="deleteBtn">delete</button><input type="checkbox" class="checkBoxInput"></li>
+        `;
+        newToDoTask.insertAdjacentHTML('beforeend', html);
     }
 }
 const manager = new ProjectManager();
