@@ -20,19 +20,6 @@ class NewProject {
         this.projectName = projectName;
         this.isClicked = false;
     }
-    pushToDoInProjectArray(toDo){
-        if(manager.findClickedArray() == undefined){
-            alert('Choose project');
-        }
-        if(manager.findClickedArray().isClicked){
-            let foundArray = manager.findClickedArray();
-            foundArray.projectArray.push(toDo);
-        }  
-    }
-    removeObject(id){
-        return manager.findClickedArray().projectArray = manager.findClickedArray().projectArray.filter(object => object.id != id)
-    }
- 
     findToDoInArray(id){
         return manager.findClickedArray().projectArray.find(object => object.id == id);
     }
@@ -58,22 +45,6 @@ class NewProject {
         `;
         projects.insertAdjacentHTML('beforeend', html);
     }
-    refreshToDo(newToDo){
-        newToDo.forEach(object => {
-            let html = `
-            <li id="${object.id}"><h3>Title: ${object.task}</h3><h4>Due date: ${object.date}</h4><button class="editBtn">edit</button><button class="deleteBtn">delete</button><input type="checkbox" ${object.isChecked}></li>
-            `;
-            newToDoTask.insertAdjacentHTML('beforeend', html);
-        })
-    }
-    removeTaskFromScreen(){
-        this.removeObject().forEach(object => {
-            let html = `
-            <li id="${object.id}"><h3>Title: ${object.task}</h3><h4>Due date: ${object.date}</h4><button class="editBtn">edit</button><button class="deleteBtn">delete</button><input type="checkbox"></li>
-            `;
-            newToDoTask.insertAdjacentHTML('beforeend', html);
-        })
-    }
 }
 class ProjectManager {
     constructor(){
@@ -96,11 +67,25 @@ class ProjectManager {
     returnProjecManagerArray(){
         console.log(this.newProjectsArray);
     }
-    pushToDoInclickedProject(toDo){
-        return this.findClickedArray().projectArray.push(toDo);
+    pushToDoInClickedProject(toDo){
+        return this.findClickedProjectWithState().projectArray.push(toDo);
     }
     removeClickedProject(getId){
         this.newProjectsArray = this.newProjectsArray.filter(project => project.id != getId)
+    }
+    findClickedToDo(id){
+        return this.findClickedProjectWithState().projectArray.find(toDo => toDo.id = id);
+    }
+    removeToDo(id){
+        return this.findClickedProjectWithState().projectArray = this.findClickedProjectWithState().projectArray.filter(object => object.id != id)
+    }
+    renderTasksOnScreen(){
+        this.removeToDo().forEach(object => {
+            let html = `
+            <li id="${object.id}"><h3>Title: ${object.task}</h3><h4>Due date: ${object.date}</h4><button class="editBtn">edit</button><button class="deleteBtn">delete</button><input type="checkbox"></li>
+            `;
+            newToDoTask.insertAdjacentHTML('beforeend', html);
+        })
     }
 }
 const manager = new ProjectManager();

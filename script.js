@@ -53,7 +53,7 @@ newToDoFrom.addEventListener('submit', (e) => {
 
     const toDo = new NewToDo(toDoTaskInput.value, toDoInputDate.value, isChecked);
 
-    manager.pushToDoInclickedProject(toDo);
+    manager.pushToDoInClickedProject(toDo);
     manager.returnProjecManagerArray();
     toDoTaskInput.value = '';
     toDoInputDate.value = '';
@@ -73,10 +73,10 @@ newToDoTask.addEventListener('click', (e) => {
 
     if(checkboxInput){
         if(checkboxInput.checked){
-            project.findToDoInArray(tasks).isChecked = 'checked';
+            manager.findClickedToDo(tasks).isChecked = 'checked';
         }
        else {
-        project.findToDoInArray(tasks).isChecked = '';
+            manager.findClickedToDo(tasks).isChecked = '';
        }
     }
     else
@@ -87,7 +87,7 @@ newToDoTask.addEventListener('click', (e) => {
             newToDoEditForm.addEventListener('submit', (e) => {
                 e.preventDefault();
 
-                const foundTodDo = project.findToDoInArray(tasks);
+                const foundTodDo = manager.findClickedProjectWithState();
                 foundTodDo.task = newToDoEditTaskInput.value;
                 foundTodDo.date = newToDoEditDateInput.value;
                 newToDoTask.innerHTML = '';
@@ -98,9 +98,9 @@ newToDoTask.addEventListener('click', (e) => {
             })
         }
         if(btn.className === 'deleteBtn'){
-            project.removeObject(tasks);
+            manager.removeToDo(tasks);
             newToDoTask.innerHTML = '';
-            project.removeTaskFromScreen();
+            manager.renderTasksOnScreen();
         }
     }
 })
