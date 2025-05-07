@@ -16,11 +16,13 @@ class NewToDo {
 
 class NewProject {
     constructor(projectName, id){
-        this.projectArray = [];
+        //Preimenuj u toDos
+        this.toDos = [];
         this.id = id;
         this.projectName = projectName;
         this.isClicked = false;
     }
+    //Prebaci u projectManager i nazovi appendProject
     renderProjects(){
         let html = `
         <li id="${this.id}"><p>${this.projectName}</p><button>x</button></li>
@@ -35,29 +37,8 @@ class NewProject {
             newToDoTask.insertAdjacentHTML('beforeend', html);
         })
     }
-}
-class ProjectManager {
-    constructor(){
-        this.newProjectsArray = [];
-    }
-    pushProjectInProjectManager(project){
-        this.newProjectsArray.push(project);
-    }
-    findClickedProjectWithId(getId){
-        return this.newProjectsArray.find(project => project.id == getId);
-    }
-    findClickedProjectWithState(){
-        return this.newProjectsArray.find(project => project.isClicked == true);
-    }
-    setProjectIsClickedToFalse(){
-        this.newProjectsArray.forEach(project => project.isClicked = false);
-    }
-    pushToDoInClickedProject(toDo){
-        return this.findClickedProjectWithState().projectArray.push(toDo);
-    }
-    removeClickedProject(getId){
-        this.newProjectsArray = this.newProjectsArray.filter(project => project.id != getId)
-    }
+        //Ove metode prebaci u klasu project
+    //(Project je manager toDova pa metoda koje se bave toDovima napravi tamo)
     findClickedToDo(id){
         return this.findClickedProjectWithState().projectArray.find(toDo => toDo.id == id);
     }
@@ -79,6 +60,38 @@ class ProjectManager {
         <li id="${toDo.id}"><h3>Title: ${toDo.title}</h3><h4>Due date: ${toDo.date}</h4><button class="editBtn">edit</button><button class="deleteBtn">delete</button><input type="checkbox" class="checkBoxInput"></li>
         `;
         newToDoTask.insertAdjacentHTML('beforeend', html);
+    }
+    addToDo(toDo){
+        manager.getActiveProject().toDos.push(toDo);
+    }
+}
+class ProjectManager {
+    constructor(){
+        this.newProjects = [];
+        this.activeProject = [];
+        //Napravi novo polje this.activeProject na pocetak = null
+    }
+    pushProjectInProjectManager(project){
+        this.newProjects.push(project);
+    }
+    //Ova metoda ti je dovoljna da postavis active project
+    //Od trenutka kad imas active project u active project guras toDo ili brises
+    findProject(getId){
+        return this.newProjects.find(project => project.id == getId);
+    }
+    setActiveProject(foundProject){
+        if(this.activeProject.length < 1){
+            return this.activeProject.push(foundProject);
+        }
+    }
+    getActiveProject(){
+        return this.activeProject[0];
+    }
+    returnActiveProjects(){
+        return this.activeProject;
+    }
+    removeClickedProject(getId){
+        this.newProjects = this.newProjects.filter(project => project.id != getId)
     }
 }
 const manager = new ProjectManager();

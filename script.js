@@ -30,10 +30,10 @@ projects.addEventListener('click', (e) => {
     const removeBtn = e.target.closest('button');
     
     if(findProject){
-        const activeProject = manager.findClickedProjectWithId(getId);
+        const activeProject = manager.findProject(getId);
+        manager.setActiveProject(activeProject);
         newToDoTask.innerHTML = '';
-        activeProject.renderToDos(activeProject);
-        manager.setProjectIsClickedToFalse();
+        // activeProject.renderToDos(activeProject);
         activeProject.isClicked = true;
     }
 
@@ -51,8 +51,10 @@ newToDoFrom.addEventListener('submit', (e) => {
     const isChecked = '';
 
     const toDo = new NewToDo(toDoTitleInput.value, toDoInputDate.value, isChecked, false);
-
-    manager.pushToDoInClickedProject(toDo);
+    //manager.setActiveProject.addToDo();
+    manager.getActiveProject().addToDo(toDo);
+    console.log(manager.getActiveProject())
+    console.log(manager.returnActiveProjects())
     toDoTitleInput.value = '';
     toDoInputDate.value = '';
     toDo.createNewToDoOnClick();
