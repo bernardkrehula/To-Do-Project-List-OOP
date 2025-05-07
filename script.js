@@ -20,7 +20,7 @@ projectAddBtn.addEventListener('click', () => {
     const id = crypto.randomUUID();
     const project = new NewProject(projectInput.value, id);
     manager.pushProjectInProjectManager(project);
-    project.renderProjects();
+    manager.renderProjects(project);
     projectInput.value = '';
 })
 
@@ -33,8 +33,7 @@ projects.addEventListener('click', (e) => {
         const activeProject = manager.findProject(getId);
         manager.setActiveProject(activeProject);
         newToDoTask.innerHTML = '';
-        // activeProject.renderToDos(activeProject);
-        activeProject.isClicked = true;
+        manager.getActiveProject().renderToDos();
     }
 
     if(removeBtn){
@@ -53,8 +52,6 @@ newToDoFrom.addEventListener('submit', (e) => {
     const toDo = new NewToDo(toDoTitleInput.value, toDoInputDate.value, isChecked, false);
     //manager.setActiveProject.addToDo();
     manager.getActiveProject().addToDo(toDo);
-    console.log(manager.getActiveProject())
-    console.log(manager.returnActiveProjects())
     toDoTitleInput.value = '';
     toDoInputDate.value = '';
     toDo.createNewToDoOnClick();
@@ -73,22 +70,26 @@ newToDoTask.addEventListener('click', (e) => {
 
     if(checkboxInput){
         if(checkboxInput.checked){
-            manager.findClickedToDo(toDoId).isChecked = 'checked';
+            console.log(manager.getActiveProject().findToDo(toDoId).isChecked = 'checked');
+            console.log(manager.getActiveProject().findToDo(toDoId))
         }
-       else {
-            manager.findClickedToDo(toDoId).isChecked = '';
-       }
+        else {
+        manager.getActiveProject().findToDo(toDoId).isChecked = '';
+        console.log(manager.getActiveProject().findToDo(toDoId))
+    }
     }
     else
     {
         if(btn.className === 'editBtn'){
-            const todo = manager.findClickedToDo(toDoId);
-            todo.isEdited = true;
-            manager.renderToDoOnScreen();
+            const activeProject = manager.getActiveProject();
+            const foundToDo = activeProject.findToDo(toDoId);
+            foundToDo.isEdited = true;
+            activeProject.renderToDos();
+            
         }
         if(btn.className === 'deleteBtn'){
-            manager.removeToDo(toDoId);
-            manager.renderToDoOnScreen();
+            manager.getActiveProject().removeToDo(toDoId);
+            manager.getActiveProject().renderToDos();
         }
     }
 })
@@ -99,7 +100,7 @@ newToDoTask.addEventListener('submit', (e) => {
     if (!form) return;
 
     const toDoId = form.id;
-    const todo = manager.findClickedToDo(toDoId);
+    const todo = manager.activeProject.findToDo(toDoId);
 
     const newTitle = form.querySelector('.titleInput').value;
     const newDate = form.querySelector('.date').value;
@@ -109,6 +110,6 @@ newToDoTask.addEventListener('submit', (e) => {
     todo.date = newDate;
     todo.isChecked = isChecked ? 'checked' : '';
     todo.isEdited = false;
-    
-    manager.renderToDoOnScreen();
+
+    manager.getActiveProject().renderToDos();
 });
